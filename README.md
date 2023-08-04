@@ -1,9 +1,11 @@
-# testcontainers-jooq-codegen-maven-plugin
+# testcontainers-jooq-codegen-maven-plugin-java-11
 
-The `testcontainers-jooq-codegen-maven-plugin` simplifies the jOOQ code generation
-by using [Testcontainers](https://www.testcontainers.org/) and applying database migrations.
+The `testcontainers-jooq-codegen-maven-plugin-java-11` simplifies the jOOQ code generation
+by using [Testcontainers](https://www.testcontainers.org/) and applying database migrations for Java 11 applications.
+If you use the 17 and higher version of Java, then go to [Main plugin](https://github.com/testcontainers/testcontainers-jooq-codegen-maven-plugin)
 
-[![Build](https://github.com/testcontainers/testcontainers-jooq-codegen-maven-plugin/actions/workflows/build.yml/badge.svg)](https://github.com/testcontainers/testcontainers-jooq-codegen-maven-plugin/actions/workflows/build.yml)
+[![Build](https://github.com/Fousq/testcontainers-jooq-codegen-maven-plugin-java-11/actions/workflows/build.yml/badge.svg)]
+(https://github.com/Fousq/testcontainers-jooq-codegen-maven-plugin-java-11/actions/workflows/build.yml)
 
 ## Summary
 
@@ -169,8 +171,8 @@ Example with `PostgreSQL` and minimal configuration with `Flyway` and `JOOQ`
 
 <plugin>
     <groupId>org.testcontainers</groupId>
-    <artifactId>testcontainers-jooq-codegen-maven-plugin</artifactId>
-    <version>${testcontainers-jooq-codegen-maven-plugin.version}</version>
+    <artifactId>testcontainers-jooq-codegen-maven-plugin-java-11</artifactId>
+    <version>${testcontainers-jooq-codegen-maven-plugin-java-11.version}</version>
     <dependencies>
         <dependency>
             <groupId>org.testcontainers</groupId>

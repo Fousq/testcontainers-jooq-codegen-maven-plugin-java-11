@@ -31,18 +31,18 @@ public class FlywayRunner extends HashMap<String, String> implements MigrationRu
         var flyway = configuration.load();
         var result = flyway.migrate();
         var message = result.migrationsExecuted > 0
-                ? "Applied %s flyway migrations".formatted(result.migrationsExecuted)
+                ? String.format("Applied %s flyway migrations", result.migrationsExecuted)
                 : "No flyway migrations were applied";
         log.info(message);
     }
 
     private void addDefaults(RunnerProperties runnerProperties) {
-        var defaultResourceLocation = "%s%s/src/main/resources/db/migration"
-                .formatted(
-                        Location.FILESYSTEM_PREFIX,
-                        runnerProperties.mavenProject().getBasedir().getAbsolutePath());
-        var defaultClasspathLocation = "%s%s".formatted("classpath:", "/db/migration");
-        putIfAbsent(ConfigUtils.LOCATIONS, "%s,%s".formatted(defaultResourceLocation, defaultClasspathLocation));
+        var defaultResourceLocation = String.format(
+                "%s%s/src/main/resources/db/migration",
+                Location.FILESYSTEM_PREFIX,
+                runnerProperties.mavenProject().getBasedir().getAbsolutePath());
+        var defaultClasspathLocation = String.format("%s%s", "classpath:", "/db/migration");
+        putIfAbsent(ConfigUtils.LOCATIONS, String.format("%s,%s", defaultResourceLocation, defaultClasspathLocation));
     }
 
     private String addFlywayPrefix(String key) {

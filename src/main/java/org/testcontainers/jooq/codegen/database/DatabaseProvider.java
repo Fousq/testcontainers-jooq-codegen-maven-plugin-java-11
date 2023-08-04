@@ -1,5 +1,7 @@
 package org.testcontainers.jooq.codegen.database;
 
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
+
 import java.util.Optional;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.MariaDBContainer;
@@ -13,29 +15,30 @@ public class DatabaseProvider {
     public static JdbcDatabaseContainer<?> getDatabaseContainer(DatabaseProps props) {
         DatabaseType dbType = props.getType();
         String image = Optional.ofNullable(props.getContainerImage()).orElse(dbType.getDefaultImage());
-        JdbcDatabaseContainer<?> container =
-                switch (dbType) {
-                    case POSTGRES -> new PostgreSQLContainer<>(image);
-                    case MARIADB -> new MariaDBContainer<>(image);
-                    case MYSQL -> new MySQLContainer<>(image);
-                };
-        if (isNotEmpty(props.getUsername())) {
+        JdbcDatabaseContainer<?> container = createJdbcDatabaseContainer(dbType, image);
+
+        if (isNotBlank(props.getUsername())) {
             container.withUsername(props.getUsername());
         }
-        if (isNotEmpty(props.getPassword())) {
+        if (isNotBlank(props.getPassword())) {
             container.withPassword(props.getPassword());
         }
-        if (isNotEmpty(props.getDatabaseName())) {
+        if (isNotBlank(props.getDatabaseName())) {
             container.withDatabaseName(props.getDatabaseName());
         }
         return container;
     }
 
-    private static boolean isNotEmpty(String str) {
-        return !isEmpty(str);
-    }
-
-    private static boolean isEmpty(String str) {
-        return str == null || str.trim().isEmpty();
+    private static JdbcDatabaseContainer<?> createJdbcDatabaseContainer(DatabaseType dbType, String image) {
+        switch (dbType) {
+            case POSTGRES:
+                return new PostgreSQLContainer<>(image);
+            case MARIADB:
+                return new MariaDBContainer<>(image);
+            case MYSQL:
+                return new MySQLContainer<>(image);
+            default:
+                throw new IllegalArgumentException("Unsupported database type " + dbType.name());
+        }
     }
 }
